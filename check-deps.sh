@@ -34,5 +34,10 @@ dependencies="
     zip
 "
 for dep in ${dependencies}; do
-    ! command -v "${dep}" && echo "missing $dep"
+    if ! command -v "${dep}"; then
+        echo "missing $dep"
+        exit 1 
+    fi
 done
+
+exit 0

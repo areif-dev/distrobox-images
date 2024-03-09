@@ -28,7 +28,7 @@ RUN pacman -S --noconfirm \
     xorg-xauth
 
 # Verify that all Distrobox dependencies are present
-COPY ../check-deps.sh /tmp
+COPY check-deps.sh /tmp
 RUN /tmp/check-deps.sh
 
 # Install personalized software

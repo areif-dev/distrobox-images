@@ -33,11 +33,12 @@ dependencies="
     xauth
     zip
 "
+EXIT=0
 for dep in ${dependencies}; do
     if ! command -v "${dep}"; then
         echo "missing $dep"
-        exit 1 
+        EXIT=1
     fi
 done
 
-exit 0
+exit $EXIT

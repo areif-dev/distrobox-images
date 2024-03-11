@@ -33,6 +33,5 @@ RUN /tmp/check-deps.sh
 
 # Install personalized software
 RUN pacman -S --noconfirm \
-    steam \
-    zsh-autosuggestions
+    steam 
 

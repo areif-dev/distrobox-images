@@ -1,0 +1,34 @@
+ARG SOURCE_IMAGE="${SOURCE_IMAGE:-archlinux}"
+ARG SOURCE_ORG="${SOURCE_ORG:-archlinux}"
+ARG BASE_IMAGE="quay.io/${SOURCE_ORG}/${SOURCE_IMAGE}"
+ARG TAG="${TAG:-latest}"
+
+FROM ${BASE_IMAGE}:${TAG}
+
+    # Multilib is required for Steam
+RUN sed -i "s/ParallelDownloads = \d/ParallelDownloads = 15/g" /etc/pacman.conf && \
+    # Steam requires the multilib library \
+    echo $'[multilib]\nInclude = /etc/pacman.d/mirrorlist' >> /etc/pacman.conf && \ 
+    pacman -Syyu --noconfirm 
+
+# Install Distrobox dependencies
+RUN pacman -S --noconfirm \ 
+    bc \
+    diffutils \
+    less \
+    lsof \
+    man-db \
+    pigz \
+    rsync \
+    openssh \
+    inetutils \
+    sudo \
+    tree \
+    unzip \
+    zip \
+    wget \
+    xorg-xauth
+
+# Verify that all Distrobox dependencies are present
+COPY check-deps.sh /tmp
+RUN /tmp/check-deps.sh

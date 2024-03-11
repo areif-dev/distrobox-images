@@ -1,0 +1,34 @@
+ARG SOURCE_IMAGE="${SOURCE_IMAGE:-fedora}"
+ARG SOURCE_ORG="${SOURCE_ORG:-fedora}"
+ARG BASE_IMAGE="quay.io/${SOURCE_ORG}/${SOURCE_IMAGE}"
+ARG FEDORA_MAJOR_VERSION="${FEDORA_MAJOR_VERSION:-latest}"
+
+FROM ${BASE_IMAGE}:${FEDORA_MAJOR_VERSION}
+
+# Install missing Distrobox dependencies
+RUN dnf update && \
+    dnf install -y \
+        bc \
+        bzip2 \
+        diffutils \
+        hostname \
+        less \
+        lsof \
+        man \
+        passwd \
+        pigz \
+        pinentry \
+        iputils \
+        procps \
+        rsync \
+        util-linux \
+        openssh-clients \
+        tree \
+        unzip \
+        wget \
+        xauth \
+        zip
+
+# Verify that all Distrobox dependencies are present
+COPY check-deps.sh /tmp
+RUN /tmp/check-deps.sh

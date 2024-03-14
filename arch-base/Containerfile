@@ -5,11 +5,8 @@ ARG TAG="${TAG:-latest}"
 
 FROM ${BASE_IMAGE}:${TAG}
 
-    # Multilib is required for Steam
-RUN sed -i "s/ParallelDownloads = \d/ParallelDownloads = 15/g" /etc/pacman.conf && \
-    # Steam requires the multilib library \
-    echo $'[multilib]\nInclude = /etc/pacman.d/mirrorlist' >> /etc/pacman.conf && \ 
-    pacman -Syyu --noconfirm 
+    # Speed up pacman by enabling 15 parallel downloads 
+RUN sed -i 's/ParallelDownloads = \d/ParallelDownloads = 15/g' /etc/pacman.conf 
 
 # Install Distrobox dependencies
 RUN pacman -S --noconfirm \ 

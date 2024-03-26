@@ -8,6 +8,9 @@ FROM ${BASE_IMAGE}:${TAG}
     # Speed up pacman by enabling 15 parallel downloads 
 RUN sed -i 's/ParallelDownloads = \d/ParallelDownloads = 15/g' /etc/pacman.conf 
 
+# Install updates
+RUN pacman -Syu --noconfirm
+
 # Install Distrobox dependencies
 RUN pacman -S --noconfirm \ 
     bc \

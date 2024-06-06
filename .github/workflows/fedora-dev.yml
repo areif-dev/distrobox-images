@@ -20,7 +20,7 @@ on:
 
 env:
   platforms: 'linux/amd64'
-  registry: 'docker.io/areifdev/distrobox-images'
+  registry: 'ghcr.io/areif-dev/distrobox-images'
 
 # Prevent multiple workflow runs from racing to ensure that pushes are made
 # sequentially for the main branch. Also cancel in progress workflow runs for
@@ -75,7 +75,7 @@ jobs:
         id: push
         with:
           username: ${{ secrets.BOT_USERNAME }}
-          password: ${{ secrets.BOT_SECRET }}
+          password: ${{ secrets.GITHUB_TOKEN }}
           image: fedora-dev-distrobox
           registry: ${{ env.registry }}
           tags: |
@@ -86,20 +86,20 @@ jobs:
         with:
           registry: ${{ env.registry }}
           username: ${{ secrets.BOT_USERNAME }}
-          password: ${{ secrets.BOT_SECRET }}
+          password: ${{ secrets.GITHUB_TOKEN }}
 
       - uses: sigstore/cosign-installer@v3.3.0
 
       - name: Sign container image
         run: |
-          cosign sign -y --recursive --key env://SIGNING_SECRET ${{ env.registry }}/fedora-dev-toolbox@${{ steps.push.outputs.digest }}
+          cosign sign -y --recursive --key env://SIGNING_SECRET ${{ env.registry }}/fedora-dev-distrobox@${{ steps.push.outputs.digest }}
         env:
           COSIGN_EXPERIMENTAL: false
           SIGNING_SECRET: ${{ secrets.SIGNING_SECRET }}
 
       - name: Sign container image (latest)
         run: |
-          cosign sign -y --recursive --key env://SIGNING_SECRET ${{ env.registry }}/fedora-dev-toolbox@${{ steps.push-latest.outputs.digest }}
+          cosign sign -y --recursive --key env://SIGNING_SECRET ${{ env.registry }}/fedora-dev-distrobox@${{ steps.push-latest.outputs.digest }}
         env:
           COSIGN_EXPERIMENTAL: false
           SIGNING_SECRET: ${{ secrets.SIGNING_SECRET }}

@@ -1,6 +1,9 @@
+---
 name: "Build Fedora Development Image"
 
-permissions: read-all
+permissions: 
+  contents: read
+  packages: write
 
 on:
   pull_request:

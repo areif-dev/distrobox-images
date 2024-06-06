@@ -78,7 +78,8 @@ jobs:
           password: ${{ secrets.BOT_SECRET }}
           image: fedora-dev-distrobox
           registry: ${{ env.registry }}
-          tags: ${{ matrix.release }}
+          tags: |
+            ${{ steps.generate-tags.outputs.alias_tags }}
 
       - name: Login to Container Registry
         uses: redhat-actions/podman-login@v1

@@ -19,7 +19,7 @@ on:
     - cron:  '0 10 * * *'  # Build at 10:00 UTC. A few hours after base fedora is updated
 
 env:
-  platforms: 'linux/amd64, linux/arm64'
+  platforms: 'linux/amd64'
   registry: 'docker.io/areifdev/distrobox-images'
 
 # Prevent multiple workflow runs from racing to ensure that pushes are made

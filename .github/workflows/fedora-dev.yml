@@ -1,0 +1,104 @@
+name: "Build Fedora Development Image"
+
+permissions: read-all
+
+on:
+  pull_request:
+    branches:
+      - main
+    paths:
+      - fedora-dev/**
+      - .github/workflows/fedora-dev.yaml
+  push:
+    branches:
+      - main
+    paths:
+      - fedora-dev/**
+      - .github/workflows/fedora-dev.yaml
+  schedule:
+    - cron:  '0 10 * * *'  # Build at 10:00 UTC. A few hours after base fedora is updated
+
+env:
+  platforms: 'linux/amd64, linux/arm64'
+  registry: 'docker.io/areifdev/distrobox-images'
+
+# Prevent multiple workflow runs from racing to ensure that pushes are made
+# sequentially for the main branch. Also cancel in progress workflow runs for
+# pull requests only.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  build-push-images:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Generate tags
+        id: generate-tags
+        shell: bash
+        run: |
+          # Generate a timestamp for creating an image version history
+          TIMESTAMP="$(date +%Y%m%d)"
+          BUILD_TAGS=()
+          BUILD_TAGS+=("${TIMESTAMP}")
+          BUILD_TAGS+=("latest")
+          alias_tags=("${BUILD_TAGS[@]}")
+          echo "Generated the following build tags: "
+          for TAG in "${BUILD_TAGS[@]}"; do
+              echo "${TAG}"
+          done
+          echo "alias_tags=${alias_tags[*]}" >> $GITHUB_OUTPUT
+
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up QEMU for multi-arch builds
+        shell: bash
+        run: |
+          sudo apt update
+          sudo apt install qemu-user-static
+
+      - name: Build container image
+        uses: redhat-actions/buildah-build@v2
+        with:
+          platforms: ${{ env.platforms }}
+          context: fedora-dev
+          image: fedora-dev-distrobox
+          tags: | 
+            ${{ steps.generate-tags.outputs.alias_tags }}
+          containerfiles: fedora-dev/Containerfile
+          layers: false
+          oci: true
+
+      - name: Push to Container Registry
+        uses: redhat-actions/push-to-registry@v2
+        id: push
+        with:
+          username: ${{ secrets.BOT_USERNAME }}
+          password: ${{ secrets.BOT_SECRET }}
+          image: fedora-dev-distrobox
+          registry: ${{ env.registry }}
+          tags: ${{ matrix.release }}
+
+      - name: Login to Container Registry
+        uses: redhat-actions/podman-login@v1
+        with:
+          registry: ${{ env.registry }}
+          username: ${{ secrets.BOT_USERNAME }}
+          password: ${{ secrets.BOT_SECRET }}
+
+      - uses: sigstore/cosign-installer@v3.3.0
+
+      - name: Sign container image
+        run: |
+          cosign sign -y --recursive --key env://SIGNING_SECRET ${{ env.registry }}/fedora-dev-toolbox@${{ steps.push.outputs.digest }}
+        env:
+          COSIGN_EXPERIMENTAL: false
+          SIGNING_SECRET: ${{ secrets.SIGNING_SECRET }}
+
+      - name: Sign container image (latest)
+        run: |
+          cosign sign -y --recursive --key env://SIGNING_SECRET ${{ env.registry }}/fedora-dev-toolbox@${{ steps.push-latest.outputs.digest }}
+        env:
+          COSIGN_EXPERIMENTAL: false
+          SIGNING_SECRET: ${{ secrets.SIGNING_SECRET }}

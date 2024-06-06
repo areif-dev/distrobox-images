@@ -8,13 +8,13 @@ on:
       - main
     paths:
       - fedora-dev/**
-      - .github/workflows/fedora-dev.yaml
+      - .github/workflows/fedora-dev.yml
   push:
     branches:
       - main
     paths:
       - fedora-dev/**
-      - .github/workflows/fedora-dev.yaml
+      - .github/workflows/fedora-dev.yml
   schedule:
     - cron:  '0 10 * * *'  # Build at 10:00 UTC. A few hours after base fedora is updated
 

@@ -12,7 +12,7 @@ on:
       - main
     paths:
       - 'fedora-base/**'
-      - 'fedora-gaming/**'
+      - 'fedora-rec/**'
       - 'fedora-dev/**'
       - '.github/workflows/fedora-images.yml'
   push:
@@ -20,7 +20,7 @@ on:
       - main
     paths:
       - 'fedora-base/**'
-      - 'fedora-gaming/**'
+      - 'fedora-rec/**'
       - 'fedora-dev/**'
       - '.github/workflows/fedora-images.yml'
   schedule:
@@ -35,7 +35,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        image: ['fedora-base', 'fedora-dev']
+        image: ['fedora-base', 'fedora-dev', 'fedora-rec']
     env:
       platforms: 'linux/amd64'
       registry: 'ghcr.io/areif-dev/distrobox-images'

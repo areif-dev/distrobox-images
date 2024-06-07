@@ -1,0 +1,20 @@
+FROM ghcr.io/areif-dev/distrobox-images/fedora-base:latest
+
+RUN mkdir -p /tmp/extras
+
+COPY ./rpmfusion.sh /tmp/extras/rpmfusion.sh
+RUN /tmp/extras/rpmfusion.sh
+
+RUN dnf install -y \
+    discord \
+    steam 
+
+COPY ./extras.sh /tmp/extras/extras.sh
+WORKDIR /tmp/extra
+RUN /tmp/extras/extras.sh && \
+    rm -rf /tmp/extras
+
+# Update and clean up 
+RUN dnf upgrade -y && \
+    dnf clean all && \
+    dnf autoremove -y

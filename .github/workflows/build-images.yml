@@ -35,7 +35,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        image: ['fedora-base']
+        image: ['fedora-base', 'fedora-dev']
     env:
       platforms: 'linux/amd64'
       registry: 'ghcr.io/areif-dev/distrobox-images'

@@ -1,5 +1,6 @@
 ---
-name: "Build Fedora Development Image"
+
+name: "Build Distrobox Images"
 
 permissions: 
   contents: read
@@ -10,25 +11,21 @@ on:
     branches:
       - main
     paths:
-      - fedora-dev/**
-      - .github/workflows/fedora-dev.yml
+      - 'fedora-base/**'
+      - 'fedora-gaming/**'
+      - 'fedora-dev/**'
+      - '.github/workflows/fedora-images.yml'
   push:
     branches:
       - main
     paths:
-      - fedora-dev/**
-      - .github/workflows/fedora-dev.yml
+      - 'fedora-base/**'
+      - 'fedora-gaming/**'
+      - 'fedora-dev/**'
+      - '.github/workflows/fedora-images.yml'
   schedule:
-    - cron:  '0 10 * * *'  # Build at 10:00 UTC. A few hours after base fedora is updated
+    - cron: '0 10 * * *'  # Build at 10:00 UTC. A few hours after base fedora is updated
 
-env:
-  platforms: 'linux/amd64'
-  image: 'fedora-dev'
-  registry: 'ghcr.io/areif-dev/distrobox-images'
-
-# Prevent multiple workflow runs from racing to ensure that pushes are made
-# sequentially for the main branch. Also cancel in progress workflow runs for
-# pull requests only.
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: ${{ github.event_name == 'pull_request' }}
@@ -36,6 +33,12 @@ concurrency:
 jobs:
   build-push-images:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        image: ['fedora-base']
+    env:
+      platforms: 'linux/amd64'
+      registry: 'ghcr.io/areif-dev/distrobox-images'
     steps:
       - name: Generate tags
         id: generate-tags
@@ -66,11 +69,11 @@ jobs:
         uses: redhat-actions/buildah-build@v2
         with:
           platforms: ${{ env.platforms }}
-          context: fedora-dev
-          image: ${{ env.image }}
+          context: ${{ matrix.image }}
+          image: ${{ matrix.image }}
           tags: | 
             ${{ steps.generate-tags.outputs.alias_tags }}
-          containerfiles: fedora-dev/Containerfile
+          containerfiles: ${{ matrix.image }}/Containerfile
           layers: false
           oci: true
 
@@ -80,7 +83,7 @@ jobs:
         with:
           username: ${{ secrets.BOT_USERNAME }}
           password: ${{ secrets.GITHUB_TOKEN }}
-          image: ${{ env.image }}
+          image: ${{ matrix.image }}
           registry: ${{ env.registry }}
           tags: |
             ${{ steps.generate-tags.outputs.alias_tags }}
@@ -96,7 +99,8 @@ jobs:
 
       - name: Sign container image
         run: |
-          cosign sign -y --recursive --key env://SIGNING_SECRET ${{ env.registry }}/${{ env.image }}@${{ steps.push.outputs.digest }}
+          cosign sign -y --recursive --key env://SIGNING_SECRET ${{ env.registry }}/${{ matrix.image }}@${{ steps.push.outputs.digest }}
         env:
           COSIGN_EXPERIMENTAL: false
           SIGNING_SECRET: ${{ secrets.SIGNING_SECRET }}
+

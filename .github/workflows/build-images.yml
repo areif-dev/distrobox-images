@@ -36,6 +36,7 @@ jobs:
     strategy:
       matrix:
         image: ['fedora-base', 'fedora-dev', 'fedora-rec']
+        base_version: [40, 40, 40]
     env:
       platforms: 'linux/amd64'
       registry: 'ghcr.io/areif-dev/distrobox-images'
@@ -49,6 +50,7 @@ jobs:
           BUILD_TAGS=()
           BUILD_TAGS+=("${TIMESTAMP}")
           BUILD_TAGS+=("latest")
+          BUILD_TAGS+=("${{ matrix.base_version }}")
           alias_tags=("${BUILD_TAGS[@]}")
           echo "Generated the following build tags: "
           for TAG in "${BUILD_TAGS[@]}"; do

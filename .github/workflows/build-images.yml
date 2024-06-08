@@ -38,7 +38,7 @@ jobs:
         image: ['fedora-base', 'fedora-dev', 'fedora-rec']
         base_version: [40, 40, 40]
     env:
-      platforms: 'linux/amd64'
+      platforms: 'linux/amd64, linux/arm64'
       registry: 'ghcr.io/areif-dev/distrobox-images'
     steps:
       - name: Generate tags

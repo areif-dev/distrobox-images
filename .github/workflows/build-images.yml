@@ -14,7 +14,7 @@ on:
       - 'fedora-base/**'
       - 'fedora-rec/**'
       - 'fedora-dev/**'
-      - '.github/workflows/fedora-images.yml'
+      - '.github/workflows/build-images.yml'
   push:
     branches:
       - main

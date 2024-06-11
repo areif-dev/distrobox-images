@@ -41,7 +41,7 @@ jobs:
         base_version: [40, 40, 40, 40]
     env:
       platforms: 'linux/amd64'
-      registry: 'ghcr.io/areif-dev'
+      registry: 'ghcr.io/areif-dev/distrobox-images'
     steps:
       - name: Generate tags
         id: generate-tags

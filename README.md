@@ -19,7 +19,7 @@ An image that provides apps for entertainment. This includes the YouTube fronten
 
 ### Fedora Productivity
 
-Installs various command line and graphical applications to aid in productivity tasks 
+Installs various command line and graphical applications to aid in productivity tasks.
 
 ## Scripts
 

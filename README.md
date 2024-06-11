@@ -9,12 +9,17 @@ Most of my images are based on Fedora, so this image provides sensible defaults 
 
 Images based on Fedora are built every day at 10:00 AM UTC. This is a few hours after official Fedora images are pushed to Quay, so all Fedora images should never be more than a day out of sync with upstream. 
 
-### Fedora Dev 
+### Fedora Development
 
 This image provides tools for my development workflow. This includes support for Rust, Python, and NodeJS out of the box as well as my editor of choice, Neovim. Support for ZSH Autocomplete and the Starship prompt are also included. 
+
 ### Fedora Recreation 
 
 An image that provides apps for entertainment. This includes the YouTube frontend FreeTube, Tidal-HiFi for music, as well as gaming focused programs like Steam, Heroic Games Launcher, and Discord. 
+
+### Fedora Productivity
+
+Installs various command line and graphical applications to aid in productivity tasks 
 
 ## Scripts
 

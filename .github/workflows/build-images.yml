@@ -14,6 +14,7 @@ on:
       - 'fedora-base/**'
       - 'fedora-rec/**'
       - 'fedora-dev/**'
+      - 'fedora-prod/**'
       - '.github/workflows/build-images.yml'
   push:
     branches:
@@ -22,6 +23,7 @@ on:
       - 'fedora-base/**'
       - 'fedora-rec/**'
       - 'fedora-dev/**'
+      - 'fedora-prod/**'
       - '.github/workflows/build-images.yml'
   schedule:
     - cron: '0 10 * * *'  # Build at 10:00 UTC. A few hours after base fedora is updated
@@ -35,8 +37,8 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        image: ['fedora-base', 'fedora-dev', 'fedora-rec']
-        base_version: [40, 40, 40]
+        image: ['fedora-base', 'fedora-dev', 'fedora-rec', 'fedora-prod']
+        base_version: [40, 40, 40, 40]
     env:
       platforms: 'linux/amd64'
       registry: 'ghcr.io/areif-dev/distrobox-images'

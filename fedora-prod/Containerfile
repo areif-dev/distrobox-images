@@ -1,0 +1,13 @@
+FROM ghcr.io/areif-dev/distrobox-images/fedora-base:latest
+
+# Install user software
+RUN dnf install -y \
+    keepassxc \
+    kpcli \
+    krita \
+    libreoffice 
+
+# Update and clean up 
+RUN dnf upgrade -y && \
+    dnf clean all && \
+    dnf autoremove -y

@@ -5,7 +5,9 @@ RUN dnf install -y \
     keepassxc \
     kpcli \
     krita \
-    libreoffice 
+    libreoffice \
+    perl-Authen-OATH \
+    perl-Convert-Base32
 
 # Update and clean up 
 RUN dnf upgrade -y && \

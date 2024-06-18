@@ -7,6 +7,8 @@ RUN dnf install -y \
     krita \
     libreoffice 
 
+COPY ./export-apps /usr/bin/export-apps
+
 # Update and clean up 
 RUN dnf upgrade -y && \
     dnf clean all && \

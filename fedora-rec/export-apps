@@ -1,0 +1,7 @@
+#!/usr/bin/env bash 
+
+distrobox-export --app discord
+distrobox-export --app steam 
+distrobox-export --app tidal-hifi 
+distrobox-export --app freetube 
+distrobox-export --app heroic

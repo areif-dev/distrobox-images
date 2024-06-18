@@ -10,6 +10,7 @@ RUN dnf install -y \
     discord \
     steam 
 
+COPY ./export-apps /usr/bin/export-apps
 COPY ./extras.sh /tmp/extras/extras.sh
 WORKDIR /tmp/extra
 RUN /tmp/extras/extras.sh && \

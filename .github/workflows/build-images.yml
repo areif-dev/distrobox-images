@@ -38,7 +38,7 @@ jobs:
     strategy:
       matrix:
         image: ['fedora-base', 'fedora-dev', 'fedora-rec', 'fedora-prod']
-        base_version: [40, 40, 40, 40]
+        base_version: [40]
     env:
       platforms: 'linux/amd64'
       registry: 'ghcr.io/areif-dev/distrobox-images'

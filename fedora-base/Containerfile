@@ -1,5 +1,11 @@
 FROM quay.io/fedora/fedora:40
 
+# Speed up DNF
+RUN sed -i 's/.*max_parallel_downloads=.*//g' /etc/dnf/dnf.conf && \
+    sed -i 's/.*fastestmirror=.*//g' /etc/dnf/dnf.conf && \
+    echo 'max_parallel_downloads=15' | tee -a /etc/dnf/dnf.conf && \
+    echo 'fastestmirror=True' | tee -a /etc/dnf/dnf.conf
+
 # Install missing Distrobox dependencies
 RUN dnf install -y \
     bash-completion \

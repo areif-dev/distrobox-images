@@ -1,6 +1,6 @@
 #!/usr/bin/env bash 
 
-distrobox-export --app keepassxc 
 distrobox-export --app krita 
 distrobox-export --app libreoffice
+distrobox-export --bin "$(which libreoffice)"
 distrobox-export --bin "$(which kpcli)"

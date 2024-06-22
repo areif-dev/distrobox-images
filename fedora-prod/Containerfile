@@ -4,11 +4,13 @@ FROM ghcr.io/areif-dev/distrobox-images/fedora-base:latest
 RUN dnf install -y \
     kpcli \
     krita \
-    libreoffice 
+    libreoffice \
+    perl-Authen-OATH \
+    perl-Convert-Base32
 
 # Update and clean up 
 RUN dnf upgrade -y && \
     dnf clean all && \
     dnf autoremove -y
 
-COPY ./export-apps /usr/bin/export-apps
+COPY ./export-apps /usr/bin/export-apps 

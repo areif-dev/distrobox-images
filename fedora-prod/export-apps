@@ -4,3 +4,4 @@ distrobox-export --app krita
 distrobox-export --app libreoffice
 distrobox-export --bin "$(which libreoffice)"
 distrobox-export --bin "$(which kpcli)"
+distrobox-export --bin "$(which hledger)"

@@ -7,12 +7,13 @@ RUN dnf install -y \
     jq \
     neovim \
     nodejs \
-    rpmdevtools \
-    rpmlint \
-    rustup \
     python \
     python3 \
     python3-pip \
+    rpmdevtools \
+    rpmlint \
+    rustup \
+    sqlite3 \
     zsh-autosuggestions
 
 RUN mkdir -p /tmp/extras

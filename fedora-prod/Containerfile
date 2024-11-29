@@ -3,11 +3,8 @@ FROM ghcr.io/areif-dev/distrobox-images/fedora-base:latest
 # Install user software
 RUN dnf install -y \
     hledger \
-    kpcli \
-    krita \
-    libreoffice \
-    perl-Authen-OATH \
-    perl-Convert-Base32
+    gimp \
+    libreoffice
 
 # Update and clean up 
 RUN dnf upgrade -y && \

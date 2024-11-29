@@ -1,4 +1,4 @@
-FROM quay.io/fedora/fedora:40
+FROM quay.io/fedora/fedora:41
 
 # Speed up DNF
 RUN sed -i 's/.*max_parallel_downloads=.*//g' /etc/dnf/dnf.conf && \

@@ -1,6 +1,0 @@
-#!/usr/bin/env bash 
-
-distrobox-export --app gimp
-distrobox-export --app libreoffice
-distrobox-export --bin "$(which libreoffice)"
-distrobox-export --bin "$(which hledger)"

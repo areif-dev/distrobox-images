@@ -56,3 +56,5 @@ RUN dnf install -y \
 RUN dnf upgrade -y && \
     dnf clean all && \
     dnf autoremove -y
+
+COPY ./export-apps /usr/bin/export-apps

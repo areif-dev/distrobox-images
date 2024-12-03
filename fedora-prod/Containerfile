@@ -2,13 +2,14 @@ FROM ghcr.io/areif-dev/distrobox-images/fedora-base:latest
 
 # Install user software
 RUN dnf install -y \
-    hledger \
+    chromium \
     gimp \
-    libreoffice
+    hledger \
+    libreoffice 
 
 # Update and clean up 
 RUN dnf upgrade -y && \
     dnf clean all && \
     dnf autoremove -y
 
-COPY ./export-apps /usr/bin/export-apps 
+COPY ./distrobox-export-lists.sh /etc/distrobox-export-lists.sh

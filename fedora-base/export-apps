@@ -1,0 +1,12 @@
+#!/usr/bin/env bash 
+
+source /etc/distrobox-export-lists.sh
+
+for app in "${apps[@]}"; do 
+    distrobox-export --app "$app"
+    distrobox-export --bin "$(which $app)"
+done
+
+for bin in "${bins[@]}"; do 
+    distrobox-export --bin "$(which $bin)"
+done

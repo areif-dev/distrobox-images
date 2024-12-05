@@ -1,4 +1,7 @@
-export bins=("hledger")
+export bins=(
+    "hledger"
+    "chromium-browser"
+)
 export apps=(
     "chromium"
     "gimp"

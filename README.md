@@ -1,6 +1,7 @@
 # Distrobox Images 
 
-A collection of my personal Distrobox images and related management scripts to make installing a new system quicker. 
+A collection of Distrobox images and related management scripts to setup a desktop workstation with my personal selection of apps and development environments that is atomic and highly portable. This makes for a great alternative to Flatpak.
+
 ## Images 
 
 ### Fedora Base 

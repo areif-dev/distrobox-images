@@ -11,6 +11,6 @@ for bin in "${bins[@]}"; do
 done
 
 for item in "${both[@]}"; do 
-    distrobox-export --app "$app"
-    distrobox-export --bin "$(which $app)"
+    distrobox-export --app "$item"
+    distrobox-export --bin "$(which $item)"
 done

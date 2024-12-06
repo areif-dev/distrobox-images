@@ -4,6 +4,9 @@ export bins=(
 )
 export apps=(
     "chromium"
+)
+export both=(
     "gimp"
     "libreoffice"
+    "thunderbird"
 )

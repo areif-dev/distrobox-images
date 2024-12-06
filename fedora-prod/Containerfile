@@ -5,7 +5,8 @@ RUN dnf install -y \
     chromium \
     gimp \
     hledger \
-    libreoffice 
+    libreoffice \
+    thunderbird
 
 # Update and clean up 
 RUN dnf upgrade -y && \

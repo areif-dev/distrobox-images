@@ -5,6 +5,8 @@ RUN dnf install -y \
     '@development-tools' \
     butane \
     jq \
+    mingw32-gcc \
+    mingw64-gcc \
     neovim \
     nodejs \
     python \

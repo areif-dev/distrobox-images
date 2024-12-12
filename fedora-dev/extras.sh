@@ -21,11 +21,24 @@ else
 fi
 
 echo "Downloading ollama"
-EXPECTED_OLLAMA_SUM="aa4d22c62c62de2de55329a4699fd9e7a6a0728d4d8266cd8853d5f6a896f445  /tmp/extras/ollama.sh"
-curl -L -o "/tmp/extras/ollama.sh" "https://ollama.com/install.sh"
-ACTUAL_OLLAMA_SUM="$(sha256sum /tmp/extras/ollama.sh)"
-if [ ! "$EXPECTED_OLLAMA_SUM" == "$ACTUAL_OLLAMA_SUM" ]; then
-    echo "Ollama checksums do not match"
+OLLAMA_VERSION=$(curl -s "https://api.github.com/repos/ollama/ollama/releases/latest" | jq -r '.tag_name' | sed 's/v//')
+curl -L -o "/tmp/extras/ollama-linux-amd64.tgz" "https://github.com/ollama/ollama/releases/download/v${OLLAMA_VERSION}/ollama-linux-amd64.tgz"
+# curl -L -o "/tmp/extras/ollama-linux-amd64-rocm.tgz" "https://github.com/ollama/ollama/releases/download/v${OLLAMA_VERSION}/ollama-linux-amd64-rocm.tgz"
+curl -L -o "/tmp/extras/ollama-sha256sum.txt" "https://github.com/ollama/ollama/releases/download/v${OLLAMA_VERSION}/sha256sum.txt"
+EXPECTED_OLLAMA_AMD64_SUM=$(grep './ollama-linux-amd64.tgz' /tmp/extras/ollama-sha256sum.txt | awk '{print $1}')
+# EXPECTED_OLLAMA_ROCM_SUM=$(grep './ollama-linux-amd64-rocm.tgz' /tmp/extras/ollama-sha256sum.txt | awk '{print $1}')
+ACTUAL_OLLAMA_AMD64_SUM=$(sha256sum /tmp/extras/ollama-linux-amd64.tgz | awk '{print $1}')
+# ACTUAL_OLLAMA_ROCM_SUM=$(sha256sum /tmp/extras/ollama-linux-amd64-rocm.tgz | awk '{print $1}')
+if [ ! "$EXPECTED_OLLAMA_AMD64_SUM" == "$ACTUAL_OLLAMA_AMD64_SUM" ]; then
+    echo "Ollama AMD64 checksums do not match"
     exit 1
 fi
-cat /tmp/extras/ollama.sh | sh
+# if [ ! "$EXPECTED_OLLAMA_ROCM_SUM" == "$ACTUAL_OLLAMA_ROCM_SUM" ]; then
+#     echo "Ollama ROCM checksums do not match"
+#     exit 1
+# fi
+echo "Extracting ollama"
+tar -C "/tmp/extras" -xzf "/tmp/extras/ollama-linux-amd64.tgz" --checkpoint=10000
+mv /tmp/extras/bin/* /usr/bin/
+mv /tmp/extras/lib/* /usr/lib/
+# tar -C /usr -xzf "/tmp/extras/ollama-linux-amd64-rocm.tgz"

@@ -16,7 +16,7 @@ This image provides tools for my development workflow. This includes support for
 
 ### Fedora Recreation 
 
-An image that provides apps for entertainment. This includes the YouTube frontend FreeTube, Tidal-HiFi for music, as well as gaming focused programs like Steam, Heroic Games Launcher, and Discord. 
+An image that provides apps for entertainment. This includes the YouTube frontend FreeTube and gaming focused programs like Steam, and Heroic Games Launcher. 
 
 ### Fedora Productivity
 
@@ -24,21 +24,29 @@ Installs various command line and graphical applications to aid in productivity 
 
 ## Scripts
 
-### Rebase 
+### rebase-distrobox 
 
-`rebase.sh` is used to change the image that a Distrobox container is based on. It achieves this by deleting the existing Distrobox and creating another with the same name and the same home directory. All exported apps and binaries are preserved and will continue to function as before as long as the new image also includes the app or binary. 
+Used to change the image that a Distrobox container is based on. It achieves this by deleting the existing Distrobox and creating another with the same name and the same home directory. All exported apps and binaries will be removed in this process. 
 
 #### Usage 
 
 ```bash 
-Usage: ./rebase.sh <container-name> <new-image>
+ Usage: rebase-distrobox <container-name> <new-image>
 
-This script updates a Distrobox container to use a new image.
+ This script updates a Distrobox container to use a new image.
 
-Arguments:
-  <container-name>    The name of the existing Distrobox container.
-  <new-image>         The name of the new image to use for the container.
+ Arguments:
+   <container-name>    The name of the existing Distrobox container.
+   <new-image>         The name of the new image to use for the container.
 
-Options:
-  -h, --help          Display this help message and exit.
+ Options:
+   -h, --help          Display this help message and exit.
 ```
+
+### upgrade-all-distroboxes 
+
+Rebases all current Distrobox containers on their 'latest' remote image. After rebasing, the program enters the distrobox and attempts to run `export-apps`.
+
+#### Usage 
+
+Just run `upgrade-all-distroboxes`. No arguments are accepted

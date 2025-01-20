@@ -9,4 +9,5 @@ export both=(
     "gimp"
     "libreoffice"
     "thunderbird"
+    "virt-manager"
 )

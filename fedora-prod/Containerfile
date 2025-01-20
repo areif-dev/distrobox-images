@@ -8,6 +8,17 @@ RUN dnf install -y \
     libreoffice \
     thunderbird
 
+# Virtualization packages 
+RUN dnf install -y \
+    libvirt \
+    libvirt-daemon-config-network \
+    libvirt-daemon-kvm \
+    qemu-kvm \
+    virt-manager \
+    libguestfs-tools \
+    python3-libguestfs
+
+
 # Update and clean up 
 RUN dnf upgrade -y && \
     dnf clean all && \

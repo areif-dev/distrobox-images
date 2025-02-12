@@ -2,7 +2,6 @@ FROM ghcr.io/areif-dev/distrobox-images/fedora-base:latest
 
 # Install user software
 RUN dnf install -y \
-    chromium \
     gimp \
     hledger \
     libreoffice \

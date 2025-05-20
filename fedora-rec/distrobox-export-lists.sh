@@ -1,1 +1,1 @@
-export both=("steam" "freetube" "heroic")
+export both=("steam")

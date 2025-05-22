@@ -15,6 +15,7 @@ RUN dnf install -y \
     rpmdevtools \
     rpmlint \
     rustup \
+    rust-analyzer \
     sqlite3 \
     zsh-autosuggestions
 

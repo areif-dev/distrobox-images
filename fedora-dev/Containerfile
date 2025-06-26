@@ -20,6 +20,9 @@ RUN dnf install -y \
     typescript \
     zsh-autosuggestions
 
+# Install language servers globally for use with neovim
+RUN npm i -g vscode-langservers-extracted
+
 RUN mkdir -p /tmp/extras
 COPY ./extras.sh /tmp/extras/extras.sh
 WORKDIR /tmp/extra

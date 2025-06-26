@@ -17,6 +17,7 @@ RUN dnf install -y \
     rustup \
     rust-analyzer \
     sqlite3 \
+    typescript \
     zsh-autosuggestions
 
 RUN mkdir -p /tmp/extras

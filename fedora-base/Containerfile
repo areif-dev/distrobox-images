@@ -1,4 +1,4 @@
-FROM quay.io/fedora/fedora:42
+FROM quay.io/fedora/fedora-minimal:42
 
 # Speed up DNF
 RUN sed -i 's/.*max_parallel_downloads=.*//g' /etc/dnf/dnf.conf && \
@@ -6,8 +6,10 @@ RUN sed -i 's/.*max_parallel_downloads=.*//g' /etc/dnf/dnf.conf && \
     echo 'max_parallel_downloads=15' | tee -a /etc/dnf/dnf.conf && \
     echo 'fastestmirror=True' | tee -a /etc/dnf/dnf.conf
 
+RUN dnf5 upgrade -y
+
 # Install missing Distrobox dependencies
-RUN dnf install -y \
+RUN dnf5 install -y \
     bash-completion \
     bc \
     bzip2 \
@@ -53,8 +55,7 @@ RUN dnf install -y \
     zsh
 
 # Update and clean up 
-RUN dnf upgrade -y && \
-    dnf clean all && \
-    dnf autoremove -y
+RUN dnf5 clean all && \
+    dnf5 autoremove -y
 
 COPY ./export-apps /usr/bin/export-apps

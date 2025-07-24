@@ -5,6 +5,7 @@ RUN dnf5 install -y \
     gimp \
     hledger \
     libreoffice \
+    keepassxc \
     thunderbird
 
 # Virtualization packages 

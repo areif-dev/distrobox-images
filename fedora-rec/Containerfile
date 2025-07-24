@@ -2,11 +2,13 @@ FROM ghcr.io/areif-dev/distrobox-images/fedora-base:latest
 
 RUN mkdir -p /tmp/extras
 
-RUN dnf install -y \
+RUN dnf5 install -y \
     https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm \
     https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
 
-RUN dnf install -y \
+RUN dnf5 upgrade -y
+
+RUN dnf5 install -y \
     gamemode \
     steam 
 
@@ -15,9 +17,8 @@ WORKDIR /tmp/extra
 RUN /tmp/extras/extras.sh && \
     rm -rf /tmp/extras
 
-# Update and clean up 
-RUN dnf upgrade -y && \
-    dnf clean all && \
-    dnf autoremove -y
+# Clean up 
+RUN dnf5 clean all && \
+    dnf5 autoremove -y
 
 COPY ./distrobox-export-lists.sh /etc/distrobox-export-lists.sh

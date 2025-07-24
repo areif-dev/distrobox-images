@@ -1,14 +1,14 @@
 FROM ghcr.io/areif-dev/distrobox-images/fedora-base:latest
 
 # Install user software
-RUN dnf install -y \
+RUN dnf5 install -y \
     gimp \
     hledger \
     libreoffice \
     thunderbird
 
 # Virtualization packages 
-RUN dnf install -y \
+RUN dnf5 install -y \
     libvirt \
     libvirt-daemon-config-network \
     libvirt-daemon-kvm \
@@ -19,8 +19,8 @@ RUN dnf install -y \
 
 
 # Update and clean up 
-RUN dnf upgrade -y && \
-    dnf clean all && \
-    dnf autoremove -y
+RUN dnf5 upgrade -y && \
+    dnf5 clean all && \
+    dnf5 autoremove -y
 
 COPY ./distrobox-export-lists.sh /etc/distrobox-export-lists.sh

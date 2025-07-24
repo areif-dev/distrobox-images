@@ -1,7 +1,9 @@
 FROM ghcr.io/areif-dev/distrobox-images/fedora-base:latest
 
+RUN dnf5 upgrade -y
+
 # Install user software
-RUN dnf install -y \
+RUN dnf5 install -y \
     '@development-tools' \
     butane \
     jq \
@@ -28,7 +30,6 @@ WORKDIR /tmp/extra
 RUN /tmp/extras/extras.sh && \
     rm -rf /tmp/extras
 
-# Update and clean up 
-RUN dnf upgrade -y && \
-    dnf clean all && \
-    dnf autoremove -y
+# Clean up 
+RUN dnf5 clean all && \
+    dnf5 autoremove -y

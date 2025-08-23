@@ -23,6 +23,7 @@ RUN dnf5 install -y \
 
 # Install language servers globally for use with neovim
 RUN npm i -g vscode-langservers-extracted typescript-language-server
+RUN pip install pyright
 
 RUN mkdir -p /tmp/extras
 COPY ./extras.sh /tmp/extras/extras.sh

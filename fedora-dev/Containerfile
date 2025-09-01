@@ -11,6 +11,7 @@ RUN dnf5 install -y \
     mingw64-gcc \
     neovim \
     nodejs \
+    openssl-devel \
     python \
     python3 \
     python3-pip \

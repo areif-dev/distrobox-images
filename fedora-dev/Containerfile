@@ -21,6 +21,7 @@ RUN dnf5 install -y \
     rustup \
     rust-analyzer \
     sqlite3 \
+    sqlite-devel \
     zsh-autosuggestions
 
 # Install language servers globally for use with neovim

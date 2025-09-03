@@ -6,6 +6,7 @@ RUN dnf5 upgrade -y
 RUN dnf5 install -y \
     '@development-tools' \
     butane \
+    clang-devel \
     jq \
     mingw32-gcc \
     mingw64-gcc \

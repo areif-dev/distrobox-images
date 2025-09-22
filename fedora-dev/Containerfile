@@ -5,8 +5,10 @@ RUN dnf5 upgrade -y
 # Install user software
 RUN dnf5 install -y \
     '@development-tools' \
+    alsa-lib-devel \
     butane \
     clang-devel \
+    ffmpeg \
     jq \
     mingw32-gcc \
     mingw64-gcc \
